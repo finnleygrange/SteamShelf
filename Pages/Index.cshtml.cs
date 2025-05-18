@@ -28,6 +28,8 @@ namespace SteamShelf.Pages
             {
                 SteamPlayer = await _steamService.GetPlayerAsync(openId);
                 SteamOwnedGames = await _steamService.GetOwnedGamesAsync(openId);
+
+                ViewData["SteamPlayer"] = SteamPlayer;
             }
         }
     }

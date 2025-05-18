@@ -1,4 +1,11 @@
-﻿<!DOCTYPE html>
+﻿@using SteamShelf.Model
+
+@{
+    var steamPlayer = ViewData["SteamPlayer"] as SteamPlayer;
+}
+
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -26,6 +33,28 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-page="/Games">Games</a>
                         </li>
+                    </ul>
+                    <ul class="navbar-nav">
+                        @if (User.Identity?.IsAuthenticated ?? false)
+                        {
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <img src="@steamPlayer?.AvatarSmall" alt="Avatar" class="rounded-circle me-2"/>
+                                    @steamPlayer?.PersonaName
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                                    <li><a class="dropdown-item" href="/logout">Logout</a></li>
+                                </ul>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" href="/login">
+                                    <img src="~/images/sits_01.png" alt="Sign in through Steam"/>
+                                </a>
+                            </li>
+                        }
                     </ul>
                 </div>
             </div>
