@@ -1,8 +1,12 @@
-﻿namespace SteamShelf.Model
+﻿using System.Text.Json.Serialization;
+
+namespace SteamShelf.Model
 {
     public class SteamPlayer
     {
-        public string? steamid { get; set; }
-        public string? personaname { get; set; }
+        [JsonPropertyName("steamid")]
+        public string? SteamId { get; set; }
+        [JsonPropertyName("personaname")]
+        public string? PersonaName { get; set; }
     }
 }

@@ -1,7 +1,10 @@
-﻿namespace SteamShelf.Model
+﻿using System.Text.Json.Serialization;
+
+namespace SteamShelf.Model
 {
-    public class SteamApiResponse
+    public class SteamApiResponse<T>
     {
-        public SteamApiResponseData response { get; set; } = new();
+        [JsonPropertyName("response")]
+        public T Response { get; set; } = default!;
     }
 }
