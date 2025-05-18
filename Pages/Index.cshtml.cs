@@ -3,6 +3,7 @@ using SteamShelf.Model;
 using SteamShelf.Services;
 using System.Security.Claims;
 
+
 namespace SteamShelf.Pages
 {
     public class IndexModel : PageModel
@@ -26,6 +27,7 @@ namespace SteamShelf.Pages
             if (!string.IsNullOrEmpty(openId))
             {
                 SteamPlayer = await _steamService.GetPlayerAsync(openId);
+                SteamOwnedGames = await _steamService.GetOwnedGamesAsync(openId);
             }
         }
     }

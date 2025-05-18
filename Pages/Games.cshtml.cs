@@ -25,6 +25,7 @@ namespace SteamShelf.Pages
 
             if (!string.IsNullOrEmpty(openId))
             {
+                SteamPlayer = await _steamService.GetPlayerAsync(openId);
                 SteamOwnedGames = await _steamService.GetOwnedGamesAsync(openId);
             }
         }
