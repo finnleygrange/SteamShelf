@@ -12,5 +12,6 @@ namespace SteamShelf.Model
         public int Playtime2Weeks { get; set; }
         [JsonPropertyName("playtime_forever")]
         public int PlaytimeForever {  get; set; }
+        public string HeaderImageUrl => $"https://cdn.cloudflare.steamstatic.com/steam/apps/{AppId}/header.jpg";
     }
 }
