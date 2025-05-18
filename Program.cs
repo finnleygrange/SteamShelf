@@ -1,6 +1,7 @@
 using AspNet.Security.OpenId.Steam;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using SteamShelf.Services;
 
 namespace SteamShelf
 {
@@ -9,6 +10,7 @@ namespace SteamShelf
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+            var steamApiKey = builder.Configuration["SteamApiKey"];
 
             // Add services to the container.
             builder.Services.AddRazorPages();
@@ -19,6 +21,13 @@ namespace SteamShelf
             })
                 .AddCookie()
                 .AddSteam();
+
+            builder.Services.AddHttpClient("SteamApi", client =>
+            {
+                client.BaseAddress = new Uri("https://api.steampowered.com/");
+            });
+
+            builder.Services.AddScoped<SteamApiService>();
 
             var app = builder.Build();
 
