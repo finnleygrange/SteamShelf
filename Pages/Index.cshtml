@@ -14,7 +14,33 @@
     }
     else
     {
-        <h1 class="display-4">Welcome, @Model.SteamPlayer?.personaname</h1>
-        <a class="btn btn-danger" href="/logout">Logout</a>
+        @if (!isAuthenticated)
+        {
+            <a href="/login">
+                <img src="~/images/sits_02.png" alt="Sign in through Steam" />
+            </a>
+        }
+        else
+        {
+            <h1>Your Steam Games</h1>
+
+            @if (Model.SteamOwnedGames == null)
+            {
+                <p>You have no games or you are not logged in.</p>
+            }
+            else
+            {
+                <ul class="list-group">
+                    @foreach (var game in Model.SteamOwnedGames)
+                    {
+                        <li class="list-group-item d-flex align-items-center">
+                            <div>
+                                <strong>@game.Name</strong><br />
+                            </div>
+                        </li>
+                    }
+                </ul>
+            }
+        }
     }
 </div>

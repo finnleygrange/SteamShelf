@@ -31,10 +31,26 @@ namespace SteamShelf.Services
             }
 
             var json = await response.Content.ReadAsStringAsync();
-            var result = JsonSerializer.Deserialize<SteamApiResponse>(json);
+            var result = JsonSerializer.Deserialize<SteamApiResponse<SteamPlayerResponseData>>(json);
 
-            return result?.response.players?.FirstOrDefault();
+            return result?.Response.Players.FirstOrDefault();
+        }
 
+        public async Task<List<SteamGame>?> GetOwnedGamesAsync(string openId)
+        {
+            string steamId = ExtractSteamId(openId);
+            string url = $"IPlayerService/GetOwnedGames/v0001/?key={_apiKey}&steamid={steamId}&include_appinfo=1&format=json";
+
+            var response = await _httpClient.GetAsync(url);
+            if (!response.IsSuccessStatusCode)
+            {
+                return null;
+            }
+
+            var json = await response.Content.ReadAsStringAsync();
+            var result = JsonSerializer.Deserialize<SteamApiResponse<SteamOwnedGamesResponseData>>(json);
+
+            return result?.Response.Games;
         }
     }
 }

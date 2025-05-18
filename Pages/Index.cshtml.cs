@@ -10,9 +10,9 @@ namespace SteamShelf.Pages
     public class IndexModel : PageModel
     {
         public SteamPlayer? SteamPlayer { get; set; }
+        public List<SteamGame>? SteamOwnedGames { get; set; }
 
         private readonly SteamApiService _steamService;
-
         private readonly ILogger<IndexModel> _logger;
 
         public IndexModel(ILogger<IndexModel> logger, SteamApiService steamService)
@@ -21,13 +21,14 @@ namespace SteamShelf.Pages
             _steamService = steamService;
         }
 
-        public async Task OnGet()
+        public async Task OnGetAsync()
         {
-            var steamId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            var openId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
-            if (!string.IsNullOrEmpty(steamId))
+            if (!string.IsNullOrEmpty(openId))
             {
-                SteamPlayer = await _steamService.GetPlayerAsync(steamId);
+                SteamPlayer = await _steamService.GetPlayerAsync(openId);
+                SteamOwnedGames = await _steamService.GetOwnedGamesAsync(openId);
             }
         }
     }
