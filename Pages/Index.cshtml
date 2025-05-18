@@ -2,9 +2,17 @@
 @model IndexModel
 @{
     ViewData["Title"] = "Home page";
+    bool isAuthenticated = User?.Identity?.IsAuthenticated ?? false;
 }
 
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    @if (!isAuthenticated)
+    {
+        <a class="btn btn-primary" href="/login">Login with Steam</a>
+    }
+    else
+    {
+        <a class="btn btn-danger" href="/logout">Logout</a>
+    }
 </div>

@@ -1,3 +1,7 @@
+using AspNet.Security.OpenId.Steam;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
+
 namespace SteamShelf
 {
     public class Program
@@ -8,6 +12,13 @@ namespace SteamShelf
 
             // Add services to the container.
             builder.Services.AddRazorPages();
+            builder.Services.AddAuthentication(options =>
+            {
+                options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = SteamAuthenticationDefaults.AuthenticationScheme;
+            })
+                .AddCookie()
+                .AddSteam();
 
             var app = builder.Build();
 
@@ -23,11 +34,27 @@ namespace SteamShelf
 
             app.UseRouting();
 
+            app.UseAuthentication();
+
             app.UseAuthorization();
 
             app.MapStaticAssets();
             app.MapRazorPages()
                .WithStaticAssets();
+
+            app.MapGet("/login", async context =>
+            {
+                await context.ChallengeAsync(SteamAuthenticationDefaults.AuthenticationScheme, new AuthenticationProperties
+                {
+                    RedirectUri = "/"
+                });
+            });
+
+            app.MapGet("/logout", async context =>
+            {
+                await context.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+                context.Response.Redirect("/");
+            });
 
             app.Run();
         }
