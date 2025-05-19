@@ -7,6 +7,7 @@ namespace SteamShelf.Pages
 {
     public class GamesModel : PageModel
     {
+        public string ViewType { get; set; } = "grid";
         public SteamPlayer? SteamPlayer { get; set; }
         public List<SteamGame>? SteamOwnedGames { get; set; }
 
@@ -19,8 +20,13 @@ namespace SteamShelf.Pages
             _steamService = steamService;
         }
 
-        public async Task OnGet()
+        public async Task OnGet(string view)
         {
+            if (!string.IsNullOrEmpty(view) && (view == "grid" || view == "list"))
+            {
+                ViewType = view;
+            }
+
             var openId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
             if (!string.IsNullOrEmpty(openId))
