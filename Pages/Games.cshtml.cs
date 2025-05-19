@@ -8,8 +8,10 @@ namespace SteamShelf.Pages
     public class GamesModel : PageModel
     {
         public string ViewType { get; set; } = "grid";
+        public string SearchTerm { get; set; } = string.Empty;
         public SteamPlayer? SteamPlayer { get; set; }
         public List<SteamGame>? SteamOwnedGames { get; set; }
+        public List<SteamGame>? FilteredGames { get; set; }
 
         private readonly SteamApiService _steamService;
         private readonly ILogger<GamesModel> _logger;
@@ -20,12 +22,14 @@ namespace SteamShelf.Pages
             _steamService = steamService;
         }
 
-        public async Task OnGet(string view)
+        public async Task OnGet(string view, string search)
         {
             if (!string.IsNullOrEmpty(view) && (view == "grid" || view == "list"))
             {
                 ViewType = view;
             }
+
+            SearchTerm = search ?? "";
 
             var openId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
@@ -34,7 +38,16 @@ namespace SteamShelf.Pages
                 SteamPlayer = await _steamService.GetPlayerAsync(openId);
                 SteamOwnedGames = await _steamService.GetOwnedGamesAsync(openId);
 
-                ViewData["SteamPlayer"] = SteamPlayer;
+                if (!string.IsNullOrEmpty(SearchTerm))
+                {
+                    FilteredGames = SteamOwnedGames
+                        ?.Where(g => g.Name.Contains(SearchTerm, StringComparison.OrdinalIgnoreCase))
+                        .ToList();
+                }
+                else
+                {
+                    FilteredGames = SteamOwnedGames;
+                }
             }
         }
     }

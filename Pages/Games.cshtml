@@ -5,11 +5,17 @@
     bool isAuthenticated = User?.Identity?.IsAuthenticated ?? false;
 }
 
-<div class="btn-group mb-3" role="group" aria-label="View toggle">
-    <a href="?view=grid" class="btn btn-outline-primary @(Model.ViewType == "grid" ? "active" : "")">Grid View</a>
-    <a href="?view=list" class="btn btn-outline-primary @(Model.ViewType == "list" ? "active" : "")">List View</a>
+<div class="mb-3 d-flex justify-content-between" role="group" aria-label="View toggle">
+    <div class="btn-group">
+        <a href="?view=grid&search=@Model.SearchTerm" class="btn btn-outline-primary @(Model.ViewType == "grid" ? "active" : "")">Grid View</a>
+        <a href="?view=list&search=@Model.SearchTerm" class="btn btn-outline-primary @(Model.ViewType == "list" ? "active" : "")">List View</a>
+    </div>
+    
+    <form method="get" class="">
+        <input type="text" name="search" value="@Model.SearchTerm" placeholder="Search games..." class="form-control"/>
+        <input type="hidden" name="view" value="@Model.ViewType" />
+    </form>
 </div>
-
 
 <div class="text-center">
     @if (Model.SteamOwnedGames != null && Model.SteamOwnedGames.Any())
@@ -17,28 +23,34 @@
         if (Model.ViewType == "grid")
         {
             <div class="row">
-                @foreach (var game in Model.SteamOwnedGames)
+                @if (Model.FilteredGames != null && Model.FilteredGames.Any())
                 {
-                    <div class="col-6 col-md-3 mb-4">
-                        <div class="card h-100">
-                            <img src="@game.HeaderImageUrl" alt="@game.Name" class="card-img-top" />
-                            <div class="card-body">
-                                <h5 class="card-title">@game.Name</h5>
+                    @foreach (var game in Model.FilteredGames)
+                    {
+                        <div class="col-6 col-md-3 mb-4">
+                            <div class="card h-100">
+                                <img src="@game.HeaderImageUrl" alt="@game.Name" class="card-img-top" />
+                                <div class="card-body">
+                                    <h5 class="card-title">@game.Name</h5>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    }
                 }
             </div>
         }
         else if (Model.ViewType == "list")
         {
             <ul class="list-group">
-                @foreach (var game in Model.SteamOwnedGames)
+                @if (Model.FilteredGames != null && Model.FilteredGames.Any())
                 {
-                    <li class="list-group-item d-flex align-items-center">
-                        <img src="@game.HeaderImageUrl" alt="@game.Name" style="width: 64px; height: 32px; margin-right: 10px;" />
-                        <strong>@game.Name</strong>
-                    </li>
+                    @foreach (var game in Model.FilteredGames)
+                    {
+                        <li class="list-group-item d-flex align-items-center">
+                            <img src="@game.HeaderImageUrl" alt="@game.Name" style="width: 64px; height: 32px; margin-right: 10px;" />
+                            <strong>@game.Name</strong>
+                        </li>
+                    }
                 }
             </ul>
         }
@@ -47,5 +59,4 @@
     {
         <p>You have no games or you are not logged in.</p>
     }
-
 </div>
