@@ -14,8 +14,34 @@
     }
     else
     {
-        <img src="@Model.SteamPlayer?.AvatarFull" alt="User Avatar" class="rounded-circle"/>
-        <h1 class="display-3">Welcome, <b>@Model.SteamPlayer?.PersonaName</b></h1>
-        <a class="btn btn-danger" href="/logout">Logout</a>
+        <img src="@Model.SteamPlayer?.AvatarFull" alt="User Avatar" class="rounded-circle mb-3"/>
+        <h1 class="display-5">Welcome, <strong>@Model.SteamPlayer?.PersonaName</strong></h1>
+
+        @if (Model.SteamOwnedGames != null)
+        {
+            <div class="mt-4">
+                <p><strong>Total Games:</strong> @Model.TotalGames</p>
+                <p><strong>Total Playtime (All Time):</strong> @Model.TotalplaytimeHours hours</p>
+            </div>
+        }
+
+        @if (Model.RecentlyPlayedGames != null && Model.RecentlyPlayedGames.Any())
+        {
+            <h2 class="mt-4 mb-3">Recent Activity (@Model.PlaytimeLast2WeeksHours.ToString("F1") hours past 2 weeks)</h2>
+            <div class="row justify-content-center">
+                @foreach (var game in Model.RecentlyPlayedGames)
+                {
+                    <div class="col-md-3 mb-3">
+                        <div class="card h-100">
+                            <img src="@game.HeaderImageUrl" class="card-img-top" alt="@game.Name" />
+                            <div class="card-body">
+                                <h5 class="card-title">@game.Name</h5>
+                                <p class="card-text">@((game.Playtime2Weeks / 60.0).ToString("F1")) hours played</p>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        }
     }
 </div>
