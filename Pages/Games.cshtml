@@ -28,13 +28,15 @@
                     @foreach (var game in Model.FilteredGames)
                     {
                         <div class="col-6 col-md-3 mb-4">
-                            <div class="card h-100">
-                                <img src="@game.HeaderImageUrl" alt="@game.Name" class="card-img-top" />
-                                <div class="card-body">
-                                    <h5 class="card-title">@game.Name</h5>
-                                    <p class="card-text">@((game.PlaytimeForever / 60.0).ToString("F1"))  hours played</p>
+                            <a href="https://store.steampowered.com/app/@game.AppId" target="_blank" class="text-decoration-none text-reset">
+                                <div class="card h-100">
+                                    <img src="@game.HeaderImageUrl" alt="@game.Name" class="card-img-top" />
+                                    <div class="card-body">
+                                        <h5 class="card-title">@game.Name</h5>
+                                        <p class="card-text">@((game.PlaytimeForever / 60.0).ToString("F1"))  hours played</p>
+                                    </div>
                                 </div>
-                            </div>
+                            </a>
                         </div>
                     }
                 }
@@ -50,10 +52,13 @@
                         <li class="list-group-item d-flex align-items-center">
                             <img src="@game.HeaderImageUrl" alt="@game.Name" style="width: 64px; height: 32px; margin-right: 10px;" />
                             <div class="d-flex flex-column text-start">
-                                <strong>@game.Name</strong>
-                                @((game.PlaytimeForever / 60.0).ToString("F1")) hours played
+                                <a href="https://store.steampowered.com/app/@game.AppId" target="_blank" class="fw-bold hover-link text-reset">
+                                    @game.Name
+                                </a>
+                                <span>@((game.PlaytimeForever / 60.0).ToString("F1")) hours played</span>
                             </div>
                         </li>
+
                     }
                 }
             </ul>

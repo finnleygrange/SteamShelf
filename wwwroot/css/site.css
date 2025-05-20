@@ -26,6 +26,20 @@ body {
     -webkit-appearance: auto !important;
 }
 
+.card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px black;
+    transition: all 0.4s ease-in-out;
+}
+
+a {
+    text-decoration: none;
+}
+
+.hover-link:hover {
+    color: #0d6efd;
+    text-decoration: underline;
+}
 
 .form-floating > .form-control-plaintext::placeholder, .form-floating > .form-control::placeholder {
   color: var(--bs-secondary-color);
