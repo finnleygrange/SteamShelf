@@ -14,7 +14,9 @@
     }
     else
     {
-        <img src="@Model.SteamPlayer?.AvatarFull" alt="User Avatar" class="rounded-circle mb-3"/>
+        <a href="https://steamcommunity.com/profiles/@Model.SteamPlayer?.SteamId" target="_blank">
+            <img src="@Model.SteamPlayer?.AvatarFull" alt="User Avatar" class="rounded-circle mb-3"/>
+        </a>
         <h1 class="display-5">Welcome, <strong>@Model.SteamPlayer?.PersonaName</strong></h1>
 
         @if (Model.SteamOwnedGames != null)
