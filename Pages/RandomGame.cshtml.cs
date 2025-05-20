@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
@@ -7,6 +8,7 @@ using System.Security.Claims;
 
 namespace SteamShelf.Pages
 {
+    [Authorize]
     public class RandomGameModel : PageModel
     {
         public SteamPlayer? SteamPlayer { get; set; }

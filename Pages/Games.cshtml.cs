@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using SteamShelf.Model;
 using SteamShelf.Services;
@@ -5,6 +6,7 @@ using System.Security.Claims;
 
 namespace SteamShelf.Pages
 {
+    [Authorize]
     public class GamesModel : PageModel
     {
         public string ViewType { get; set; } = "grid";
