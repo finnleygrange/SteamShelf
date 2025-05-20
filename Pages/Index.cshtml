@@ -27,6 +27,12 @@
             </div>
         }
 
+        <p>
+            <a href="https://steamcommunity.com/profiles/@Model.SteamPlayer?.SteamId" target="_blank" class="btn btn-outline-secondary btn-sm">
+                View on Steam
+            </a>
+        </p>
+
         @if (Model.RecentlyPlayedGames != null && Model.RecentlyPlayedGames.Any())
         {
             <h2 class="mt-4 mb-3">Recent Activity (@Model.PlaytimeLast2WeeksHours.ToString("F1") hours past 2 weeks)</h2>
