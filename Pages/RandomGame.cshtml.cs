@@ -14,7 +14,7 @@ namespace SteamShelf.Pages
         public SteamGame? RandomGame {  get; set; }
 
         [BindProperty]
-        public bool OnlyUnplayedGames { get; set; } = false;
+        public bool OnlyUnplayedGames { get; set; } = true;
 
         private readonly SteamApiService _steamService;
         private readonly ILogger<RandomGameModel> _logger;

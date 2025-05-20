@@ -2,3 +2,27 @@
 @model SteamShelf.Pages.RandomGameModel
 @{
 }
+
+<div class="container text-center">
+    <form method="post">
+        <div class="form-check mb-3 d-flex justify-content-center align-items-center">
+            <input type="checkbox" class="form-check-input me-2" asp-for="OnlyUnplayedGames">
+            <label class="form-check-label">Only unplayed games</label>
+        </div>
+        <button class="btn btn-primary mt-2" type="submit">Randomize</button>
+    </form>
+        
+    
+
+    @if (Model.RandomGame != null)
+    {
+        <div class="card mt-4 d-inline-block" style="width: 50%;">
+            <img src="@Model.RandomGame.HeaderImageUrl" class="card-img-top">
+            <div class="card-body">
+                <h5 class="card-title">@Model.RandomGame.Name</h5>
+                <p class="card-text">Playtime: @Model.RandomGame.PlaytimeForever hours</p>
+                <a href="https://store.steampowered.com/app/@Model.RandomGame.AppId" class="btn btn-outline-primary" target="_blank">Open in Steam</a>
+            </div>
+        </div>
+    }
+</div>
