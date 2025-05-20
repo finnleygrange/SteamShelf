@@ -16,13 +16,15 @@
 
     @if (Model.RandomGame != null)
     {
-        <div class="card mt-4 d-inline-block" style="width: 50%;">
-            <img src="@Model.RandomGame.HeaderImageUrl" class="card-img-top">
-            <div class="card-body">
-                <h5 class="card-title">@Model.RandomGame.Name</h5>
-                <p class="card-text">Playtime: @Model.RandomGame.PlaytimeForever hours</p>
-                <a href="https://store.steampowered.com/app/@Model.RandomGame.AppId" class="btn btn-outline-primary" target="_blank">Open in Steam</a>
+        <a href="https://store.steampowered.com/app/@Model.RandomGame.AppId" target="_blank">
+            <div class="card mt-4 d-inline-block" style="width: 50%;">
+                <img src="@Model.RandomGame.HeaderImageUrl" class="card-img-top">
+                <div class="card-body">
+                    <h5 class="card-title">@Model.RandomGame.Name</h5>
+                    <p class="card-text">Playtime: @Model.RandomGame.PlaytimeForever hours</p>
+                </div>
             </div>
-        </div>
+        </a>
+        
     }
 </div>
