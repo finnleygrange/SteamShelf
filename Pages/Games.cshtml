@@ -32,6 +32,7 @@
                                 <img src="@game.HeaderImageUrl" alt="@game.Name" class="card-img-top" />
                                 <div class="card-body">
                                     <h5 class="card-title">@game.Name</h5>
+                                    <p class="card-text">@((game.PlaytimeForever / 60.0).ToString("F1"))  hours played</p>
                                 </div>
                             </div>
                         </div>
@@ -48,7 +49,10 @@
                     {
                         <li class="list-group-item d-flex align-items-center">
                             <img src="@game.HeaderImageUrl" alt="@game.Name" style="width: 64px; height: 32px; margin-right: 10px;" />
-                            <strong>@game.Name</strong>
+                            <div class="d-flex flex-column text-start">
+                                <strong>@game.Name</strong>
+                                @((game.PlaytimeForever / 60.0).ToString("F1")) hours played
+                            </div>
                         </li>
                     }
                 }
